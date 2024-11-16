@@ -8,14 +8,17 @@
     utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
+        phiola = import ./default.nix {
+          inherit (pkgs) stdenv lib fetchurl autoPatchelfHook;
+          pkgs = pkgs;
+        };
       in
       {
+        packages.default = phiola;
+
         devShells.default = pkgs.mkShell {
           buildInputs = [
-            (import ./default.nix {
-              inherit (pkgs) stdenv lib fetchurl autoPatchelfHook;
-              pkgs = pkgs;
-            })
+            phiola
           ];
         };
       });

@@ -30,11 +30,9 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     runHook preInstall
-    echo "HERE"
     mkdir -p $out/bin
     tar xf $src -C $out/bin
     ln -s $out/bin/phiola-2/phiola $out/bin/phiola
-    echo "BEAR"
     runHook postInstall
   '';
 
